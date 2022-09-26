@@ -1,0 +1,90 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100vh;
+}
+
+body {
+  padding: 1em 2em;
+}
+
+.main-content {
+  height: 100%;
+}
+
+form,
+.bookshelf {
+  margin-bottom: 2em;
+}
+
+form {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.book {
+  width: 25px;
+  height: 90%;
+  border: 2px solid black;
+  border-radius: 3px;
+
+  align-self: end;
+
+  z-index: 0;
+}
+
+.bookshelf {
+  width: 100%;
+  height: 90%;
+  border-block: 4px solid saddlebrown;
+  border-bottom: 7px solid saddlebrown;
+  border-inline: 8px solid saddlebrown;
+  background-color: rgb(248, 239, 227);
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 25px);
+  grid-auto-rows: 17%;
+
+  position: relative;
+}
+
+.shelf {
+  width: 100%;
+  height: 3px;
+  background-color: saddlebrown;
+  position: absolute;
+
+  z-index: 1;
+}
+
+#first-shelf {
+  top: 0;
+}
+
+#second-shelf {
+  top: 17%;
+}
+
+#third-shelf {
+  top: 34%;
+}
+
+#fourth-shelf {
+  top: 51%;
+}
+
+#fifth-shelf {
+  top: 68%;
+}
+
+#sixth-shelf {
+  top: 85%;
+}

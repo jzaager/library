@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta>
+  <link href="styles.css" rel="stylesheet">
+  <script src="script.js" type="text/javascript" defer></script>
+  <title>Jzaager's Library</title>
+</head>
+
+<body>
+  <div class="main-content">
+
+    <form action="" method="post">
+      <div class="form-row">
+        <label for="book-title"></label>
+        <input type="text" name="book-title" id="book-title" required>
+      </div>
+      <div class="form-row">
+        <label for="author"></label>
+        <input type="text" name="author" id="author">
+      </div>
+      <div class="form-row">
+        <label for="page-numbers"></label>
+        <input type="number" name="page-numbers" id="page-numbers" min="0">
+      </div>
+      <div class="form-row">
+        <input type="checkbox" value="completed" name="read-complete" id="read-complete">
+        <label for="read-complete">Completed?</label>
+      </div>
+      <button type="submit">Add Book!</button>
+    </form>
+
+    <div class="bookshelf">
+      <div class="book"></div>
+      <div class="book"></div>
+  
+      <div class="shelf" id="first-shelf"></div>
+      <div class="shelf" id="second-shelf"></div>
+      <div class="shelf" id="third-shelf"></div>
+      <div class="shelf" id="fourth-shelf"></div>
+      <div class="shelf" id="fifth-shelf"></div>
+      <div class="shelf" id="sixth-shelf"></div>
+      <div class="shelf" id="seventh-shelf"></div>
+    </div>
+
+  </div> <!-- end main-content -->
+</body>
+</html>
+
