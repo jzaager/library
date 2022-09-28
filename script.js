@@ -28,9 +28,10 @@ let titleValue = document.querySelector('#book-title');
 let authorValue = document.querySelector('#author');
 let pageCountValue = document.querySelector('#page-numbers');
 let readStatus = document.querySelector('#read-complete');
+const modal = document.querySelector('.modal');
+const closeButton = document.querySelector('.close-button');
 
 function Book(title, author, pageCount, readStatus) {
-  this.name = title;
   this.title = title;
   this.author = author;
   this.pageCount = pageCount;
@@ -44,15 +45,16 @@ function addBookToLibrary(book) {
 // Display a book on the bookshelf for each book in myLibrary
 function addBooksToShelf() {
   const bookshelf = document.querySelector('.bookshelf');
+  const newDisplayBook = document.createElement('div');
 
   for (let i = myLibrary.length - 1; i < myLibrary.length; i++) {
     if (!titleValue.value) return;
 
-    const newDisplayBook = document.createElement('div');
     newDisplayBook.classList.add('book');
     newDisplayBook.style.backgroundColor = randomBgColor();
     newDisplayBook.setAttribute('index', i);
-    console.log(newDisplayBook.getAttribute('index'))
+    newDisplayBook.addEventListener('click', () => modal.showModal());
+
     if (newDisplayBook.getAttribute('index') === i) {
       continue;
     }
@@ -82,4 +84,11 @@ form.addEventListener('submit', function handleSubmit(event) {
   form.reset();
 })
 
+closeButton.addEventListener('click', () => modal.close());
 addBookButton.addEventListener('click', getBookValues);
+
+// ADD AN EVENT LISTENER TO EACH DISPLAYED BOOK
+  // ON CLICK --> open modal (dialog)
+  // DISPLAY THE BOOK'S INFO
+  // ADD BUTTON TO REMOVE BOOK
+  // ADD BUTTON TO CHANGE READ STATUS
