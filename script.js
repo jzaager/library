@@ -21,22 +21,26 @@
 
 const myLibrary = [];
 
+const bookshelf = document.querySelector('.bookshelf');
 const addBookButton = document.querySelector('[type="submit"]');
 const form = document.querySelector('form');
-
 let titleValue = document.querySelector('#book-title');
 let authorValue = document.querySelector('#author');
 let pageCountValue = document.querySelector('#page-numbers');
 let readStatus = document.querySelector('#read-complete');
+
 const modal = document.querySelector('.modal');
 const closeButton = document.querySelector('.close-button');
+const removeButton = document.querySelector('.remove-button');
 
 function Book(title, author, pageCount, readStatus) {
-  this.title = title;
-  this.author = author;
-  this.pageCount = pageCount;
-  this.haveRead = Boolean(readStatus);
+  this.title = title,
+  this.author = author,
+  this.pageCount = pageCount,
+  this.haveRead = Boolean(readStatus)
 }
+
+// Book.prototype.getIndex = () => this.getAttribute('index');
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
@@ -44,8 +48,10 @@ function addBookToLibrary(book) {
 
 // Display a book on the bookshelf for each book in myLibrary
 function addBooksToShelf() {
-  const bookshelf = document.querySelector('.bookshelf');
   const newDisplayBook = document.createElement('div');
+  let bookTitle = document.getElementById('bookTitle');
+  let bookAuthor = document.getElementById('bookAuthor');
+  let bookPageCount = document.getElementById('bookPageCount');
 
   for (let i = myLibrary.length - 1; i < myLibrary.length; i++) {
     if (!titleValue.value) return;
@@ -53,8 +59,8 @@ function addBooksToShelf() {
     newDisplayBook.classList.add('book');
     newDisplayBook.style.backgroundColor = randomBgColor();
     newDisplayBook.setAttribute('index', i);
-    newDisplayBook.addEventListener('click', () => modal.showModal());
-
+    newDisplayBook.addEventListener('click', setModalText);
+    
     if (newDisplayBook.getAttribute('index') === i) {
       continue;
     }
@@ -78,6 +84,23 @@ function getBookValues() {
   addBooksToShelf();
 }
 
+function setModalText() {
+  const index = this.getAttribute('index');
+  console.log(index);
+
+  bookTitle.textContent = myLibrary[index].title;
+  bookAuthor.textContent = myLibrary[index].author;
+  bookPageCount.textContent = myLibrary[index].pageCount;
+
+  modal.showModal();
+
+  removeButton.addEventListener('click', () => {
+    myLibrary.splice([index], 1);
+    const bookToRemove = document.querySelector(`[index="${index}"]`)
+    bookToRemove.remove();
+  });
+}
+
 // Event Listeners
 form.addEventListener('submit', function handleSubmit(event) {
   event.preventDefault();
@@ -85,6 +108,8 @@ form.addEventListener('submit', function handleSubmit(event) {
 })
 
 closeButton.addEventListener('click', () => modal.close());
+
+
 addBookButton.addEventListener('click', getBookValues);
 
 // ADD AN EVENT LISTENER TO EACH DISPLAYED BOOK

@@ -14,13 +14,15 @@
 
      <!-- modal -->
      <dialog class="modal" id="modal">
-      <h2>Book Title</h2>
-      <p>Author</p>
+      <h2 id="bookTitle">Book Title</h2>
+      <p id="bookAuthor">Author</p>
+      <p id="bookPageCount">Number of Pages</p>
       <div class="form-row">
         <input type="checkbox" value="completed" name="read-complete" id="read-complete">
         <label for="read-complete">Completed?</label>
       </div>
       <button class="close-button">Close</button>
+      <button class="remove-button">Remove from Library</button>
     </dialog>
 
     <form action="" method="">
@@ -44,8 +46,8 @@
     </form>
 
     <div class="bookshelf">
-      <div class="book"></div>
-      <div class="book"></div>
+      <!-- <div class="book"></div>
+      <div class="book"></div> -->
 
       <div class="shelf" id="first-shelf"></div>
       <div class="shelf" id="second-shelf"></div>
