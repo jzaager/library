@@ -24,11 +24,10 @@ const myLibrary = [];
 const bookshelf = document.querySelector('.bookshelf');
 const addBookButton = document.querySelector('[type="submit"]');
 const form = document.querySelector('form');
-let titleValue = document.querySelector('#book-title');
-let authorValue = document.querySelector('#author');
-let pageCountValue = document.querySelector('#page-numbers');
-let readStatus = document.querySelector('#read-complete');
-
+const inputTitle = document.querySelector('#book-title');
+const inputAuthor = document.querySelector('#author');
+const inputPageCount = document.querySelector('#page-numbers');
+const inputReadStatus = document.querySelector('#read-complete');
 const modal = document.querySelector('.modal');
 const closeButton = document.querySelector('.close-button');
 const removeButton = document.querySelector('.remove-button');
@@ -37,35 +36,28 @@ function Book(title, author, pageCount, readStatus) {
   this.title = title,
   this.author = author,
   this.pageCount = pageCount,
-  this.haveRead = Boolean(readStatus)
+  this.haveRead = readStatus
 }
 
-// Book.prototype.getIndex = () => this.getAttribute('index');
+Book.prototype.setIndex = function() {
+  return this.index = myLibrary.indexOf(this);
+} 
 
-function addBookToLibrary(book) {
-  myLibrary.push(book);
+// Create new book and add to myLibrary array
+function addBookToLibrary() {
+  const newBook = new Book(inputTitle.value, inputAuthor.value,
+        inputPageCount.value, inputReadStatus.checked);
+  myLibrary.push(newBook);
+  console.log(newBook.setIndex());
+}
+
+function getBookValues() {
+
 }
 
 // Display a book on the bookshelf for each book in myLibrary
 function addBooksToShelf() {
-  const newDisplayBook = document.createElement('div');
-  let bookTitle = document.getElementById('bookTitle');
-  let bookAuthor = document.getElementById('bookAuthor');
-  let bookPageCount = document.getElementById('bookPageCount');
 
-  for (let i = myLibrary.length - 1; i < myLibrary.length; i++) {
-    if (!titleValue.value) return;
-
-    newDisplayBook.classList.add('book');
-    newDisplayBook.style.backgroundColor = randomBgColor();
-    newDisplayBook.setAttribute('index', i);
-    newDisplayBook.addEventListener('click', setModalText);
-    
-    if (newDisplayBook.getAttribute('index') === i) {
-      continue;
-    }
-    bookshelf.append(newDisplayBook);
-  }
 }
 
 // Random color for each new book
@@ -76,31 +68,6 @@ function randomBgColor() {
   return `rgb(${randomColor1}, ${randomColor2}, ${randomColor3})`;
 }
 
-function getBookValues() {
-  if (!titleValue.value) return;
-  const newBook = new Book(titleValue.value, authorValue.value, 
-                          pageCountValue.value, readStatus.value);
-  addBookToLibrary(newBook);
-  addBooksToShelf();
-}
-
-function setModalText() {
-  const index = this.getAttribute('index');
-  console.log(index);
-
-  bookTitle.textContent = myLibrary[index].title;
-  bookAuthor.textContent = myLibrary[index].author;
-  bookPageCount.textContent = myLibrary[index].pageCount;
-
-  modal.showModal();
-
-  removeButton.addEventListener('click', () => {
-    myLibrary.splice([index], 1);
-    const bookToRemove = document.querySelector(`[index="${index}"]`)
-    bookToRemove.remove();
-  });
-}
-
 // Event Listeners
 form.addEventListener('submit', function handleSubmit(event) {
   event.preventDefault();
@@ -108,9 +75,7 @@ form.addEventListener('submit', function handleSubmit(event) {
 })
 
 closeButton.addEventListener('click', () => modal.close());
-
-
-addBookButton.addEventListener('click', getBookValues);
+addBookButton.addEventListener('click', addBookToLibrary);
 
 // ADD AN EVENT LISTENER TO EACH DISPLAYED BOOK
   // ON CLICK --> open modal (dialog)
