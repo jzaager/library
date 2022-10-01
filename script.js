@@ -20,7 +20,6 @@ function Book(title, author, pageCount, readStatus) {
   this.haveRead = readStatus
 
 }
-
 Book.prototype.getIndex = function() {
   return myLibrary.indexOf(this);
 }
@@ -33,8 +32,10 @@ function addBookToLibrary() {
   const newBook = new Book(inputTitle.value, inputAuthor.value,
     inputPageCount.value, inputReadStatus.checked);
 
-  myLibrary.push(newBook);
-  newBook.setIndex();
+  if (inputTitle.value) {
+    myLibrary.push(newBook);
+    newBook.setIndex();
+  }
   displayAllBooks();
 }
 
@@ -68,7 +69,7 @@ function displayAllBooks() {
     setReadButtonText();
     bookOnShelf.append(readButton);
   }
-  if (numberOfBooks == myLibrary.length) {
+  if (numberOfBooks == myLibrary.length && inputTitle.value != '') {
     bookshelf.append(bookOnShelf);
   }
   numberOfBooks++;
