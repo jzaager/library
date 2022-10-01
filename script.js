@@ -3,16 +3,15 @@ const myLibrary = [];
 const bookshelf = document.querySelector('.bookshelf');
 const addBookButton = document.querySelector('[type="submit"]');
 const form = document.querySelector('form');
-const modal = document.querySelector('.modal');
-const closeButton = document.querySelector('.close-button');
 const removeButton = document.querySelector('.remove-button');
-const readButton = document.querySelector('#modal-read');
 
 const inputTitle = document.querySelector('#book-title');
 const inputAuthor = document.querySelector('#author');
 const inputPageCount = document.querySelector('#page-numbers');
 const inputReadStatus = document.querySelector('#read-complete');
 
+// Always 1 more than myLibrary.length to prevent extra book creation
+let numberOfBooks = 1;
 
 function Book(title, author, pageCount, readStatus) {
   this.title = title,
@@ -42,30 +41,52 @@ function addBookToLibrary() {
 // Display books in myLibrary array on the shelf visually
 function displayAllBooks() {
   const bookOnShelf = document.createElement('div');
-  
+  const readButton = document.createElement('button');
+
   for (let i = 0; i < myLibrary.length; i++) {
     bookOnShelf.classList.add('book', 'created-book');
     bookOnShelf.style.backgroundColor = randomBgColor();
     bookOnShelf.setAttribute('index', `${myLibrary[i].index}`);
     bookOnShelf.textContent = myLibrary[i].title + ', ' +
         myLibrary[i].author + ', ' +
-        myLibrary[i].pageCount + ', ' +
-        (myLibrary[i].haveRead == true ? 'Read' : 'Not Read')
+        myLibrary[i].pageCount;
+    
+    const setReadButtonText = () => {
+      readButton.classList.add('read-button');
+      readButton.setAttribute('index', myLibrary[i].index);
+      readButton.addEventListener('click', toggleReadStatus);
+
+      if (myLibrary[i].haveRead == true) {
+        readButton.textContent = 'Read';
+        readButton.style.backgroundColor = 'lime';
+      } 
+      else {
+        readButton.textContent = 'Not yet read';
+        readButton.style.backgroundColor = 'salmon';
+      }
+    };
+    setReadButtonText();
+    bookOnShelf.append(readButton);
   }
-  bookshelf.append(bookOnShelf);
-  // Callback function here to prevent multiple callbacks on each click
-  // bookOnShelf.addEventListener('click', showModalInfo);
+  if (numberOfBooks == myLibrary.length) {
+    bookshelf.append(bookOnShelf);
+  }
+  numberOfBooks++;
+
 }
 
-function toggleReadStatus() {
-  const readButtonIndex = readButton.getAttribute('index');
-  console.log(readButtonIndex)
+function toggleReadStatus(event) {
+  const readButtonIndex = event.target.getAttribute('index');
 
   if (myLibrary[readButtonIndex].haveRead !== true) {
     myLibrary[readButtonIndex].haveRead = true;
+    event.target.textContent = 'Read';
+    event.target.style.backgroundColor = 'lime';
   }
   else {
     myLibrary[readButtonIndex].haveRead = false;
+    event.target.textContent = 'Not yet read';
+    event.target.style.backgroundColor = 'salmon';
   }
 }
 
@@ -83,6 +104,4 @@ form.addEventListener('submit', function handleSubmit(event) {
   form.reset();
 })
 
-closeButton.addEventListener('click', () => modal.close());
 addBookButton.addEventListener('click', addBookToLibrary);
-readButton.addEventListener('click', toggleReadStatus);
