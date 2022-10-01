@@ -6,6 +6,7 @@ const form = document.querySelector('form');
 const modal = document.querySelector('.modal');
 const closeButton = document.querySelector('.close-button');
 const removeButton = document.querySelector('.remove-button');
+const readButton = document.querySelector('#modal-read');
 
 const inputTitle = document.querySelector('#book-title');
 const inputAuthor = document.querySelector('#author');
@@ -18,6 +19,7 @@ function Book(title, author, pageCount, readStatus) {
   this.author = author,
   this.pageCount = pageCount,
   this.haveRead = readStatus
+
 }
 
 Book.prototype.getIndex = function() {
@@ -40,31 +42,31 @@ function addBookToLibrary() {
 // Display books in myLibrary array on the shelf visually
 function displayAllBooks() {
   const bookOnShelf = document.createElement('div');
-
+  
   for (let i = 0; i < myLibrary.length; i++) {
-    bookOnShelf.classList.add('book');
-    bookOnShelf.classList.add('created-book')
+    bookOnShelf.classList.add('book', 'created-book');
     bookOnShelf.style.backgroundColor = randomBgColor();
-    bookOnShelf.setAttribute('index', `${i}`);
-    // Callback function here to prevent multiple callbacks on each click
-    bookOnShelf.addEventListener('click', showModalInfo);
+    bookOnShelf.setAttribute('index', `${myLibrary[i].index}`);
+    bookOnShelf.textContent = myLibrary[i].title + ', ' +
+        myLibrary[i].author + ', ' +
+        myLibrary[i].pageCount + ', ' +
+        (myLibrary[i].haveRead == true ? 'Read' : 'Not Read')
   }
   bookshelf.append(bookOnShelf);
+  // Callback function here to prevent multiple callbacks on each click
+  // bookOnShelf.addEventListener('click', showModalInfo);
 }
 
-function showModalInfo() {
-  // Get all visually created books from the DOM
-  const books = document.querySelectorAll('.created-book');
-  
-  /* Sets the modal's info for the clicked-on book
-   to the book from myLibrary with the corresponding index */
-  books.forEach( (book) => {
-    const bookIndex = book.getAttribute('index');
-    modalTitle.textContent = myLibrary[bookIndex].title;
-    modalAuthor.textContent = myLibrary[bookIndex].author;
-    modalPageCount.textContent = myLibrary[bookIndex].pageCount;
-  })
-  modal.showModal();
+function toggleReadStatus() {
+  const readButtonIndex = readButton.getAttribute('index');
+  console.log(readButtonIndex)
+
+  if (myLibrary[readButtonIndex].haveRead !== true) {
+    myLibrary[readButtonIndex].haveRead = true;
+  }
+  else {
+    myLibrary[readButtonIndex].haveRead = false;
+  }
 }
 
 // Random color for each new book
@@ -83,3 +85,4 @@ form.addEventListener('submit', function handleSubmit(event) {
 
 closeButton.addEventListener('click', () => modal.close());
 addBookButton.addEventListener('click', addBookToLibrary);
+readButton.addEventListener('click', toggleReadStatus);
