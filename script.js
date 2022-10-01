@@ -69,7 +69,8 @@ function displayAllBooks() {
     setReadButtonText();
     bookOnShelf.append(readButton);
   }
-  if (numberOfBooks == myLibrary.length && inputTitle.value != '') {
+  
+  if (numberOfBooks == myLibrary.length) {
     bookshelf.append(bookOnShelf);
   }
   numberOfBooks++;

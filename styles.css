@@ -47,9 +47,8 @@ form {
   z-index: 1;
 }
 
-.book:hover {
+.read-button:hover {
   cursor: pointer;
-  scale: 1.05;
 }
 
 .bookshelf {
