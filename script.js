@@ -50,9 +50,12 @@ function displayAllBooks() {
     e.target.parentElement.remove();
     
     myLibrary.map( book => book.setIndex());
+
+    const readButtons = document.querySelectorAll('.read-button');
     const books = document.querySelectorAll('.created-book');
     for (let i = 0; i < myLibrary.length; i++) {
       books[i].setAttribute('index', i);
+      readButtons[i].setAttribute('index', i);
     }
   }
 
