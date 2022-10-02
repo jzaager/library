@@ -17,7 +17,6 @@ function Book(title, author, pageCount, readStatus) {
   this.author = author,
   this.pageCount = pageCount,
   this.haveRead = readStatus
-
 }
 Book.prototype.getIndex = function() {
   return myLibrary.indexOf(this);
@@ -25,11 +24,6 @@ Book.prototype.getIndex = function() {
 Book.prototype.setIndex = function() {
   return this.index = myLibrary.indexOf(this);
 } 
-/* Book.prototype.removeBook = function() {
-  const displayBookIndex = this.getAttribute('index');
-  myLibrary.splice((displayBookIndex), 1);
-  this.remove();
-} */
 
 // Create new book, add to myLibrary array, set it's index
 function addBookToLibrary() {
@@ -41,6 +35,7 @@ function addBookToLibrary() {
     newBook.setIndex();
   }
   displayAllBooks();
+  form.reset();
 }
 
 // Display books in myLibrary array on the shelf visually
@@ -49,35 +44,40 @@ function displayAllBooks() {
   const readButton = document.createElement('button');
   const removeButton = document.createElement('button');
 
-  const removeBook = function() {
-    const displayBookIndex = this.getAttribute('index');
-    myLibrary.splice((displayBookIndex), 1);
-    this.remove();
+  const removeBook = function(e) {
+    const displayBookIndex = e.target.parentElement.getAttribute('index');
+    myLibrary.splice(displayBookIndex, 1);
+    e.target.parentElement.remove();
+    
+    myLibrary.map( book => book.setIndex());
+    const books = document.querySelectorAll('.created-book');
+    for (let i = 0; i < myLibrary.length; i++) {
+      books[i].setAttribute('index', i);
+    }
   }
+
+  // const boundRemoveBook = removeBook.bind(bookOnShelf);
   
   for (let i = 0; i < myLibrary.length; i++) {
+    // Creates the books on the shelf
     bookOnShelf.classList.add('book', 'created-book');
     bookOnShelf.style.backgroundColor = randomBgColor();
     bookOnShelf.setAttribute('index', `${myLibrary[i].index}`);
     bookOnShelf.textContent = myLibrary[i].title + ', ' +
         myLibrary[i].author + ', ' +
         myLibrary[i].pageCount;
-    
-    const boundRemoveBook = removeBook.bind(bookOnShelf);
 
     const setRemoveButtonText = () => {
       removeButton.classList.add('remove-button');
       removeButton.textContent = 'Remove';
-      removeButton.addEventListener('click', boundRemoveBook);
+      removeButton.addEventListener('click', removeBook);
     }
-    setRemoveButtonText();
-    bookOnShelf.append(removeButton);
-    
+  
     const setReadButtonText = () => {
       readButton.classList.add('read-button');
       readButton.setAttribute('index', myLibrary[i].index);
       readButton.addEventListener('click', toggleReadStatus);
-
+  
       if (myLibrary[i].haveRead == true) {
         readButton.textContent = 'Read';
         readButton.style.backgroundColor = 'lime';
@@ -88,14 +88,13 @@ function displayAllBooks() {
       }
     }
     setReadButtonText();
-    bookOnShelf.append(readButton);
+    setRemoveButtonText();
+    bookOnShelf.append(removeButton, readButton);
   }
-  
-  if (numberOfBooks == myLibrary.length) {
+
+  if (inputTitle.value) {
     bookshelf.append(bookOnShelf);
   }
-  numberOfBooks++;
-
 }
 
 function toggleReadStatus(event) {
@@ -124,7 +123,6 @@ function randomBgColor() {
 // Event Listeners
 form.addEventListener('submit', function handleSubmit(event) {
   event.preventDefault();
-  form.reset();
 })
 
 addBookButton.addEventListener('click', addBookToLibrary);
