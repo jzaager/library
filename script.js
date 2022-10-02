@@ -65,13 +65,13 @@ function displayAllBooks() {
         myLibrary[i].pageCount;
 
     const setRemoveButtonText = () => {
-      removeButton.classList.add('remove-button');
+      removeButton.classList.add('button', 'remove-button');
       removeButton.textContent = 'Remove';
       removeButton.addEventListener('click', removeBook);
     }
   
     const setReadButtonText = () => {
-      readButton.classList.add('read-button');
+      readButton.classList.add('button', 'read-button');
       readButton.setAttribute('index', myLibrary[i].index);
       readButton.addEventListener('click', toggleReadStatus);
   
@@ -81,7 +81,7 @@ function displayAllBooks() {
       } 
       else {
         readButton.textContent = 'Not yet read';
-        readButton.style.backgroundColor = 'salmon';
+        // readButton.style.backgroundColor = 'salmon';
       }
     }
     setReadButtonText();
@@ -105,7 +105,7 @@ function toggleReadStatus(event) {
   else {
     myLibrary[readButtonIndex].haveRead = false;
     event.target.textContent = 'Not yet read';
-    event.target.style.backgroundColor = 'salmon';
+    event.target.style.backgroundColor = 'rgb(110, 110, 110)';
   }
 }
 
