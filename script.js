@@ -1,6 +1,5 @@
 const myLibrary = [];
 
-const bookshelf = document.querySelector('.bookshelf');
 const addBookButton = document.querySelector('[type="submit"]');
 const form = document.querySelector('form');
 
@@ -9,17 +8,11 @@ const inputAuthor = document.querySelector('#author');
 const inputPageCount = document.querySelector('#page-numbers');
 const inputReadStatus = document.querySelector('#read-complete');
 
-// Always 1 more than myLibrary.length to prevent extra book creation
-let numberOfBooks = 1;
-
 function Book(title, author, pageCount, readStatus) {
   this.title = title,
   this.author = author,
   this.pageCount = pageCount,
   this.haveRead = readStatus
-}
-Book.prototype.getIndex = function() {
-  return myLibrary.indexOf(this);
 }
 Book.prototype.setIndex = function() {
   return this.index = myLibrary.indexOf(this);
@@ -28,7 +21,7 @@ Book.prototype.setIndex = function() {
 // Create new book, add to myLibrary array, set it's index
 function addBookToLibrary() {
   const newBook = new Book(inputTitle.value, inputAuthor.value,
-    inputPageCount.value, inputReadStatus.checked);
+      inputPageCount.value, inputReadStatus.checked);
 
   if (inputTitle.value) {
     myLibrary.push(newBook);
@@ -40,26 +33,27 @@ function addBookToLibrary() {
 
 // Display books in myLibrary array on the shelf visually
 function displayAllBooks() {
+  const bookshelf = document.querySelector('.bookshelf');
   const bookOnShelf = document.createElement('div');
   const readButton = document.createElement('button');
   const removeButton = document.createElement('button');
 
   const removeBook = function(e) {
     const displayBookIndex = e.target.parentElement.getAttribute('index');
+
     myLibrary.splice(displayBookIndex, 1);
     e.target.parentElement.remove();
     
+    /* Reset indexes for books in the array and
+       on display (and their read buttons) */
     myLibrary.map( book => book.setIndex());
-
-    const readButtons = document.querySelectorAll('.read-button');
-    const books = document.querySelectorAll('.created-book');
     for (let i = 0; i < myLibrary.length; i++) {
+      const books = document.querySelectorAll('.created-book');
+      const readButtons = document.querySelectorAll('.read-button');
       books[i].setAttribute('index', i);
       readButtons[i].setAttribute('index', i);
     }
   }
-
-  // const boundRemoveBook = removeBook.bind(bookOnShelf);
   
   for (let i = 0; i < myLibrary.length; i++) {
     // Creates the books on the shelf
@@ -127,5 +121,4 @@ function randomBgColor() {
 form.addEventListener('submit', function handleSubmit(event) {
   event.preventDefault();
 })
-
 addBookButton.addEventListener('click', addBookToLibrary);
