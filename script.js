@@ -3,7 +3,6 @@ const myLibrary = [];
 const bookshelf = document.querySelector('.bookshelf');
 const addBookButton = document.querySelector('[type="submit"]');
 const form = document.querySelector('form');
-const removeButton = document.querySelector('.remove-button');
 
 const inputTitle = document.querySelector('#book-title');
 const inputAuthor = document.querySelector('#author');
@@ -26,6 +25,11 @@ Book.prototype.getIndex = function() {
 Book.prototype.setIndex = function() {
   return this.index = myLibrary.indexOf(this);
 } 
+/* Book.prototype.removeBook = function() {
+  const displayBookIndex = this.getAttribute('index');
+  myLibrary.splice((displayBookIndex), 1);
+  this.remove();
+} */
 
 // Create new book, add to myLibrary array, set it's index
 function addBookToLibrary() {
@@ -43,7 +47,14 @@ function addBookToLibrary() {
 function displayAllBooks() {
   const bookOnShelf = document.createElement('div');
   const readButton = document.createElement('button');
+  const removeButton = document.createElement('button');
 
+  const removeBook = function() {
+    const displayBookIndex = this.getAttribute('index');
+    myLibrary.splice((displayBookIndex), 1);
+    this.remove();
+  }
+  
   for (let i = 0; i < myLibrary.length; i++) {
     bookOnShelf.classList.add('book', 'created-book');
     bookOnShelf.style.backgroundColor = randomBgColor();
@@ -51,6 +62,16 @@ function displayAllBooks() {
     bookOnShelf.textContent = myLibrary[i].title + ', ' +
         myLibrary[i].author + ', ' +
         myLibrary[i].pageCount;
+    
+    const boundRemoveBook = removeBook.bind(bookOnShelf);
+
+    const setRemoveButtonText = () => {
+      removeButton.classList.add('remove-button');
+      removeButton.textContent = 'Remove';
+      removeButton.addEventListener('click', boundRemoveBook);
+    }
+    setRemoveButtonText();
+    bookOnShelf.append(removeButton);
     
     const setReadButtonText = () => {
       readButton.classList.add('read-button');
@@ -65,7 +86,7 @@ function displayAllBooks() {
         readButton.textContent = 'Not yet read';
         readButton.style.backgroundColor = 'salmon';
       }
-    };
+    }
     setReadButtonText();
     bookOnShelf.append(readButton);
   }
