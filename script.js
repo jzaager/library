@@ -37,6 +37,9 @@ function displayAllBooks() {
   const bookOnShelf = document.createElement('div');
   const readButton = document.createElement('button');
   const removeButton = document.createElement('button');
+  const bookTitle = document.createElement('h2');
+  const bookAuthor = document.createElement('h3');
+  const bookPageCount = document.createElement('p');
 
   const removeBook = function(e) {
     const displayBookIndex = e.target.parentElement.getAttribute('index');
@@ -60,9 +63,10 @@ function displayAllBooks() {
     bookOnShelf.classList.add('book', 'created-book');
     bookOnShelf.style.backgroundColor = randomBgColor();
     bookOnShelf.setAttribute('index', `${myLibrary[i].index}`);
-    bookOnShelf.textContent = myLibrary[i].title + ', ' +
-        myLibrary[i].author + ', ' +
-        myLibrary[i].pageCount;
+
+    bookTitle.textContent = myLibrary[i].title;
+    bookAuthor.textContent = myLibrary[i].author;
+    bookPageCount.textContent = myLibrary[i].pageCount;
 
     const setRemoveButtonText = () => {
       removeButton.classList.add('button', 'remove-button');
@@ -81,12 +85,13 @@ function displayAllBooks() {
       } 
       else {
         readButton.textContent = 'Not yet read';
-        // readButton.style.backgroundColor = 'salmon';
+        readButton.style.backgroundColor = 'rgb(110, 110, 110)';
       }
     }
     setReadButtonText();
     setRemoveButtonText();
-    bookOnShelf.append(removeButton, readButton);
+    bookOnShelf.append(bookTitle, bookAuthor, bookPageCount, 
+        readButton, removeButton);
   }
 
   if (inputTitle.value) {

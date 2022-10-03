@@ -15,34 +15,34 @@
     <form action="" method="">
       <div class="form-row">
         <label for="book-title">Title</label>
-        <input type="text" name="book-title" id="book-title" required>
+        <input placeholder=" " type="text" name="book-title" id="book-title" required>
       </div>
       <div class="form-row">
         <label for="author">Author</label>
-        <input type="text" name="author" id="author">
+        <input type="text" name="author" id="author" placeholder=" ">
       </div>
       <div class="form-row">
-        <label for="page-numbers"></label>
-        <input placeholder="Page Count" type="number" name="page-numbers" id="page-numbers" min="0">
+        <label for="page-numbers">Page Count</label>
+        <input placeholder=" " type="number" name="page-numbers" id="page-numbers" min="0">
       </div>
       <div class="form-row">
         <input type="checkbox" name="read-complete" id="read-complete">
-        <label for="read-complete">Completed?</label>
+        <label for="read-complete">Read?</label>
       </div>
       <button type="submit" class="submit-button">Add Book!</button>
+
+      <div class="github-creator">
+        Made by Justin Zaager <a href="https://github.com/jzaager" target="_blank" rel="noreferrer noopener">
+          <img src="github-logo.png" alt="github logo" style="width:40px">
+        </a>
+      </div>
     </form>
+    
+    
 
     <div class="bookshelf">
       <!-- <div class="book"></div>
       <div class="book"></div> -->
-
-      <div class="shelf" id="first-shelf"></div>
-      <div class="shelf" id="second-shelf"></div>
-      <div class="shelf" id="third-shelf"></div>
-      <div class="shelf" id="fourth-shelf"></div>
-      <div class="shelf" id="fifth-shelf"></div>
-      <div class="shelf" id="sixth-shelf"></div>
-      <div class="shelf" id="seventh-shelf"></div>
     </div>
 
   </div> <!-- end main-content -->
