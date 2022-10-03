@@ -66,7 +66,7 @@ function displayAllBooks() {
 
     bookTitle.textContent = myLibrary[i].title;
     bookAuthor.textContent = myLibrary[i].author;
-    bookPageCount.textContent = myLibrary[i].pageCount;
+    bookPageCount.textContent = myLibrary[i].pageCount + 'pages';
 
     const setRemoveButtonText = () => {
       removeButton.classList.add('button', 'remove-button');

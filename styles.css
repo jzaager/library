@@ -168,5 +168,5 @@ input[type="number"] {
 
 .submit-button:hover {
   cursor: pointer;
-  background-color: rgb(193, 241, 148);
+  background-color: rgb(161, 161, 161);
 }
