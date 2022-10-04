@@ -24,7 +24,7 @@ Book.prototype.displayAllBooks = function() {
 
   for (let i = 0; i < myLibrary.length; i++) {
   
-    newDisplayBook.classList.add('book');
+    newDisplayBook.classList.add('book', 'created-book');
     newDisplayBook.setAttribute('index', this.getIndex());
     
     displayBookTitle.textContent = this.title;
