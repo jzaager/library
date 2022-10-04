@@ -1,5 +1,6 @@
 let myLibrary = [];
 
+const bookshelf = document.querySelector('.bookshelf');
 const form = document.querySelector('form');
 const addBookButton = document.querySelector('.submit-button');
 
@@ -9,6 +10,33 @@ function Book(title, author, pageCount, readStatus) {
   this.pageCount = pageCount;
   this.readStatus = readStatus;
 }
+Book.prototype.getIndex = function() {
+  return myLibrary.indexOf(this);
+}
+Book.prototype.setDisplayInformation = function() {
+  const newDisplayBook = document.createElement('div');
+  const displayBookTitle = document.createElement('h2');
+  const displayBookAuthor= document.createElement('h3');
+  const displayBookPageCount = document.createElement('p');
+  const readButton = document.createElement('button');
+  const removeButton = document.createElement('button');
+  
+  newDisplayBook.classList.add('book');
+  newDisplayBook.setAttribute('index', this.getIndex());
+  
+  displayBookTitle.textContent = this.title;
+  displayBookAuthor.textContent = this.author;
+  displayBookPageCount.textContent = this.pageCount;
+
+  readButton.classList.add('read-button');
+  removeButton.classList.add('remove-button');
+  readButton.textContent = (this.readStatus === true) ? 'Read' : 'Not read';
+  removeButton.textContent = 'Remove';
+
+  newDisplayBook.append(displayBookTitle, displayBookAuthor,
+    displayBookPageCount, readButton, removeButton);
+  bookshelf.append(newDisplayBook);
+}
 
 function addBookToLibrary() {
   const inputTitle = document.querySelector('#book-title').value;
@@ -16,8 +44,16 @@ function addBookToLibrary() {
   const inputPageCount = document.querySelector('#page-numbers').value;
   const inputReadStatus = document.querySelector('#read-complete').checked;
 
-  const newBook = new Book(inputTitle, inputAuthor, inputPageCount, inputReadStatus);
-  return myLibrary.push(newBook);
+  const newBook = new Book(inputTitle, inputAuthor, `${inputPageCount} pages`, inputReadStatus);
+  myLibrary.push(newBook);
+  displayAllBooks();
+}
+
+function displayAllBooks() {
+  myLibrary.forEach( book => {
+    book.setDisplayInformation();
+    
+  }); 
 }
 
 // Event Listeners
@@ -27,3 +63,4 @@ form.addEventListener('submit', function handleSubmit(event) {
 });
 
 addBookButton.addEventListener('click', addBookToLibrary);
+

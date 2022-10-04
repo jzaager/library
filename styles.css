@@ -66,11 +66,15 @@ form {
   gap: 1em;
 }
 
+.book + .book {
+  border-top: none;
+}
+
 .book,
 .headings {
   padding: 1em 4em;
   min-height: 80px;
-  border-block: 1px solid black;
+  border: 1px solid black;
 
   display: flex;
   gap: 1em;
