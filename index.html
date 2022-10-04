@@ -10,51 +10,55 @@
 </head>
 
 <body>
-  <div class="main-content">
-
-    <form action="" method="">
-      <div class="form-row">
-        <label for="book-title">Title</label>
-        <input placeholder=" " type="text" name="book-title" id="book-title" required>
-      </div>
-      <div class="form-row">
-        <label for="author">Author</label>
-        <input type="text" name="author" id="author" placeholder=" ">
-      </div>
-      <div class="form-row">
-        <label for="page-numbers">Page Count</label>
-        <input placeholder=" " type="number" name="page-numbers" id="page-numbers" min="0">
-      </div>
-      <div class="form-row">
-        <input type="checkbox" name="read-complete" id="read-complete">
-        <label for="read-complete">Read?</label>
-      </div>
-      <button type="submit" class="submit-button">Add Book!</button>
-
-      <div class="github-creator">
-        Made by Justin Zaager <a href="https://github.com/jzaager" target="_blank" rel="noreferrer noopener">
-          <img src="github-logo.png" alt="github logo" style="width:40px">
-        </a>
-      </div>
-    </form>
-    
-    
+  <div class="main-content"> 
 
     <div class="bookshelf">
+      <div class="headings">
+        <h2>Title</h2>
+        <h3>Author</h3>
+        <p>Page Count</p>
+        <p>Read?</p>
+        <p>Remove</p>
+      </div>
+
+      <form action="" method="">
+        <div class="form-row title">
+          <label for="book-title">Title</label>
+          <input placeholder=" " type="text" name="book-title" id="book-title" required>
+        </div>
+        <div class="form-row author">
+          <label for="author">Author</label>
+          <input type="text" name="author" id="author" placeholder=" ">
+        </div>
+        <div class="form-row page-count">
+          <label for="page-numbers">Page Count</label>
+          <input placeholder=" " type="number" name="page-numbers" id="page-numbers" min="0">
+        </div>
+        <div class="form-row read-status">
+          <input type="checkbox" name="read-complete" id="read-complete">
+          <label for="read-complete">Read?</label>
+        </div>
+        <div class="form-row add-book-button">
+          <button type="submit" class="submit-button">Add Book!</button>
+        </div>
+  
+      </form>
+
       <div class="book">
         <h2>Title</h2>
         <h3>Author</h3>
         <p>123 Pages</p>
-        <button class="read-button">Not Read</button>
-        <button class="remove-button">Remove</button>
+        <div class="button-group">
+          <button class="read-button not-read">Not Read</button>
+          <button class="remove-button">Remove</button>
+        </div>
       </div>
-      <div class="book">
-        <h2>Title</h2>
-        <h3>Author</h3>
-        <p>123 Pages</p>
-        <button class="read-button">Not Read</button>
-        <button class="remove-button">Remove</button>
-      </div>
+    </div>
+
+    <div class="github-creator">
+      Made by Justin Zaager <a href="https://github.com/jzaager" target="_blank" rel="noreferrer noopener">
+        <img src="github-logo.png" alt="github logo" style="width:40px">
+      </a>
     </div>
 
   </div> <!-- end main-content -->

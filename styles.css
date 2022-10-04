@@ -2,8 +2,10 @@
 
 :root {
   --clr-bookshelf: rgb(114, 76, 6);
-  --clr-remove-button: rgb(218, 21, 21);
-  --clr-read-button: rgb(110, 110, 110);
+  --clr-remove-button: rgba(242, 146, 116, 1);
+  --clr-read-button-read: rgba(132, 251, 194, 1);
+  --clr-read-button-not-read: rgba(194, 194, 194, 1);
+  --clr-add-book-button: rgba(251, 242, 163, 1);
   
   --clr-remove-button-hover: rgb(177, 15, 15);
   --clr-read-button-hover: rgb(68, 68, 68);
@@ -27,7 +29,7 @@ body {
 }
 
 body {
-  padding: 1em 2em;
+  padding: 1em 6em;
   display: flex;
   justify-content: center;
   background: repeating-linear-gradient(45deg, rgba(250, 189, 189, 0.575), rgba(164, 241, 238, 0.568));
@@ -39,7 +41,11 @@ h2 {
 }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: 2.2rem;
+}
+
+p {
+  font-size: 2.2rem;
 }
 
 .main-content {
@@ -47,32 +53,30 @@ h3 {
   height: 100%;
 }
 
-form,
 .bookshelf {
   margin-bottom: 2em;
 }
 
 form {
-  margin-top: 1em;
-  position: relative;
+  padding: 1em 4em;
 
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-evenly;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: 0.8fr 0.6fr 0.5fr .25fr 0.35fr;
+  align-items: center;
+  gap: 1em;
 }
 
 .book + .book {
   border-top: none;
 }
 
-.book {
-  padding: 1em;
+.book,
+.headings {
+  padding: 1em 4em;
   min-height: 80px;
   border: 1px solid black;
 
-  display: grid;
-  grid-template-columns: 2fr 1fr repeat(0.5fr);
+  display: flex;
   gap: 1em;
 
   align-items: center;
@@ -80,33 +84,61 @@ form {
   transition: scale 350ms ease, border-radius 350ms linear;
 }
 
-.book h2 {
+.book h2,
+.headings  h2{
+  flex: 1;
+}
+
+.form-row.title {
   grid-column: 1;
 }
 
-.book h3 {
+.book h3,
+.headings h3 {
+  flex: 0.75;
+}
+
+.form-row.author {
   grid-column: 2;
 }
 
-.book p {
+.book p,
+.headings p{
+  flex: 0.55;
+}
+
+.form-row.page-count {
   grid-column: 3;
+
 }
 
-.book .read-button {
+.form-row.read-status {
   grid-column: 4;
+  justify-self: end;
 }
 
-.book .remove-button {
+.form-row.add-book-button {
   grid-column: 5;
+  justify-self: end;
+  
+  display: flex;
+}
+
+.button-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1em;
+  flex: 0.4 0 auto;
 }
 
 button {
-  padding: 0.5em 0.25em;
+  padding: 0.75em 1em;
   border: none;
-  border-radius: 6px;
+  border-radius: 2em;
 
-  min-width: 100px;
-  max-width: 200px;
+  flex: 1;
+  max-width: 150px;
 }
 
 button:hover {
@@ -117,12 +149,35 @@ button:hover {
   background-color: var(--clr-remove-button);
 }
 
-.read-button {
-  background-color: var(--clr-read-button);
+.read-button.not-read {
+  background-color: var(--clr-read-button-not-read);
 }
 
-button:hover {
-  font-weight: 800;
+.headings {
+  border: none;
+  border-bottom: 3px solid black;
+
+  font-weight: 600;
+}
+
+.headings > * {
+  font-size: 2.2rem;
+}
+
+.headings > p {
+  text-align: right;
+}
+
+.headings > p:first-of-type {
+  text-align: left;
+}
+
+.headings > p:not(:first-of-type) {
+  flex: 0.45;
+}
+
+.headings > p:last-of-type {
+  flex: 0.35;
 }
 
 .bookshelf {
@@ -132,9 +187,8 @@ button:hover {
   border-radius: 6px;
   background-color: white;
 
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-rows: min-content;
+  display: flex;
+  flex-direction: column;
 
   position: relative;
 
@@ -151,44 +205,30 @@ button:hover {
 }
 
 .form-row label {
-  display: block;
-}
-
-.form-row:last-of-type {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-  gap: 0.5rem;
+  display: none;
 }
 
 input {
   border: 1px solid gray;
   padding: 0.5em 1em;
-  border-radius: 6px;
+  border-radius: 2em;
 }
 
 input[type="number"] {
   align-self: baseline;
 }
 
-.form-row:last-of-type,
 .submit-button {
-  align-self: flex-end;
-}
-
-.form-row:nth-of-type(4) {
-  display: inline-flex;
-  flex-wrap: nowrap;
-  gap: 0.5em;
-}
-
-.submit-button {
-  padding: 0.75em 1em;
-  border-radius: 6px;
-  border: 1px solid gray;
+  border-radius: 2em;
+  background-color: var(--clr-add-book-button);
+  min-width: 150px;
 }
 
 .submit-button:hover {
   cursor: pointer;
   background-color: rgb(193, 241, 148);
+}
+
+#read-complete {
+  margin-right: 10px;
 }
