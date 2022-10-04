@@ -64,6 +64,8 @@ form {
   grid-template-columns: 0.8fr 0.6fr 0.5fr .25fr 0.35fr;
   align-items: center;
   gap: 1em;
+
+  border-inline: 1px solid black;
 }
 
 .book + .book {
@@ -193,12 +195,16 @@ button:hover {
 
   position: relative;
 
-  box-shadow: 0 8px 0.75rem 0.2rem rgb(0 0 0 / 0.3);
+  box-shadow: 0 8px 0.9rem 0.1rem rgb(0 0 0 / 0.3);
 }
 
 .bookshelf:has(.book:hover) .book:not(:hover) {
   scale: 0.95;
   border-radius: 8px;
+}
+
+.bookshelf:has(.book:hover) form {
+  border-bottom: 1px solid black;
 }
 
 .bookshelf:has(.book:hover) .book {

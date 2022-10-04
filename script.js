@@ -13,28 +13,32 @@ function Book(title, author, pageCount, readStatus) {
 Book.prototype.getIndex = function() {
   return myLibrary.indexOf(this);
 }
-Book.prototype.setDisplayInformation = function() {
+Book.prototype.displayAllBooks = function() {
+
   const newDisplayBook = document.createElement('div');
   const displayBookTitle = document.createElement('h2');
   const displayBookAuthor= document.createElement('h3');
   const displayBookPageCount = document.createElement('p');
   const readButton = document.createElement('button');
   const removeButton = document.createElement('button');
-  
-  newDisplayBook.classList.add('book');
-  newDisplayBook.setAttribute('index', this.getIndex());
-  
-  displayBookTitle.textContent = this.title;
-  displayBookAuthor.textContent = this.author;
-  displayBookPageCount.textContent = this.pageCount;
 
-  readButton.classList.add('read-button');
-  removeButton.classList.add('remove-button');
-  readButton.textContent = (this.readStatus === true) ? 'Read' : 'Not read';
-  removeButton.textContent = 'Remove';
+  for (let i = 0; i < myLibrary.length; i++) {
+  
+    newDisplayBook.classList.add('book');
+    newDisplayBook.setAttribute('index', this.getIndex());
+    
+    displayBookTitle.textContent = this.title;
+    displayBookAuthor.textContent = this.author;
+    displayBookPageCount.textContent = this.pageCount;
 
-  newDisplayBook.append(displayBookTitle, displayBookAuthor,
-    displayBookPageCount, readButton, removeButton);
+    readButton.classList.add('read-button');
+    removeButton.classList.add('remove-button');
+    readButton.textContent = (this.readStatus === true) ? 'Read' : 'Not read';
+    removeButton.textContent = 'Remove';
+
+    newDisplayBook.append(displayBookTitle, displayBookAuthor,
+      displayBookPageCount, readButton, removeButton);
+  }
   bookshelf.append(newDisplayBook);
 }
 
@@ -43,17 +47,12 @@ function addBookToLibrary() {
   const inputAuthor = document.querySelector('#author').value;
   const inputPageCount = document.querySelector('#page-numbers').value;
   const inputReadStatus = document.querySelector('#read-complete').checked;
-
   const newBook = new Book(inputTitle, inputAuthor, `${inputPageCount} pages`, inputReadStatus);
-  myLibrary.push(newBook);
-  displayAllBooks();
-}
-
-function displayAllBooks() {
-  myLibrary.forEach( book => {
-    book.setDisplayInformation();
-    
-  }); 
+ 
+  if (inputTitle) {
+    myLibrary.push(newBook);
+    newBook.displayAllBooks();
+  }
 }
 
 // Event Listeners
