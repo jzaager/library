@@ -65,7 +65,6 @@ form {
   align-items: center;
   gap: 1em;
 
-  border-inline: 1px solid black;
   border-bottom: 1px solid black;
 }
 
@@ -81,7 +80,7 @@ form + .created-book {
 .headings {
   padding: 1em 4em;
   min-height: 80px;
-  border: 1px solid black;
+  border: 1px solid gray;
 
   display: flex;
   gap: 1em;
@@ -219,6 +218,7 @@ button:hover {
 
   position: relative;
 
+  border: 1px solid gray;
   box-shadow: 0 8px 0.9rem 0.1rem rgb(0 0 0 / 0.3);
 }
 
@@ -262,4 +262,8 @@ input[type="number"] {
 
 #read-complete {
   margin-right: 10px;
+}
+
+.github-creator {
+  float: right;
 }
