@@ -6,6 +6,7 @@
   --clr-read-button-read: rgba(132, 251, 194, 0.7);
   --clr-read-button-not-read: rgba(194, 194, 194, 0.7);
   --clr-add-book-button: rgba(251, 242, 163, 0.8);
+  --clr-checkbox-checked: rgba(156, 147, 253, 0.7);
   
   --clr-remove-button-hover: rgb(177, 15, 15);
   --clr-read-button-hover: rgb(68, 68, 68);
@@ -57,11 +58,15 @@ p {
   margin-bottom: 2em;
 }
 
+.book * {
+  font-weight: 400;
+}
+
 form {
   padding: 1em 4em;
 
   display: grid;
-  grid-template-columns: 0.8fr 0.6fr 0.5fr .25fr 0.35fr;
+  grid-template-columns: 0.8fr 0.6fr 0.5fr 0.25fr 0.35fr;
   align-items: center;
   gap: 1em;
 
@@ -100,17 +105,14 @@ form + .created-book {
 }
 
 .created-book h2 {
-  /* flex: 0.75; */
   max-width: 475px;
 }
 
 .created-book h3 {
-  /* flex: 0.75; */
   max-width: 380px;
 }
 
 .created-book p {
-  /* flex: 0.65; */
   max-width: 350px;
 }
 
@@ -228,10 +230,6 @@ button:hover {
   border-radius: 8px;
 }
 
-/* .bookshelf:has(.book:hover) form {
-  border-bottom: 1px solid black;
-} */
-
 .bookshelf:has(.book:hover) .book {
   border-top: 1px solid black;
 }
@@ -244,6 +242,10 @@ button:hover {
   display: none;
 }
 
+.form-row {
+  display: flex;
+}
+
 input {
   border: 1px solid gray;
   padding: 0.5em 1em;
@@ -254,6 +256,34 @@ input[type="number"] {
   align-self: baseline;
 }
 
+input[type="checkbox"] {
+  appearance: none;
+  font: inherit;
+  color: gray;
+  margin: 0;
+  width: 2em;
+  height: 2em;
+  border: 1px solid gray;
+  border-radius: 10.4px;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+}
+
+input[type="checkbox"]::before {
+  content: '';
+  width: 1.6em;
+  height: 1.5em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  background-color: var(--clr-checkbox-checked);
+  border-radius: 8px;
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
 .submit-button {
   border-radius: 2em;
   background-color: var(--clr-add-book-button);
@@ -262,10 +292,6 @@ input[type="number"] {
 
 .submit-button:hover {
   cursor: pointer;
-}
-
-#read-complete {
-  margin-right: 10px;
 }
 
 .github-creator {
