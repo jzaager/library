@@ -5,7 +5,7 @@
   --clr-remove-button: rgba(242, 146, 116, 0.7);
   --clr-read-button-read: rgba(132, 251, 194, 0.7);
   --clr-read-button-not-read: rgba(194, 194, 194, 0.7);
-  --clr-add-book-button: rgba(251, 242, 163, 0.7);
+  --clr-add-book-button: rgba(251, 242, 163, 0.8);
   
   --clr-remove-button-hover: rgb(177, 15, 15);
   --clr-read-button-hover: rgb(68, 68, 68);
@@ -169,6 +169,7 @@ button {
 
 button:hover {
   cursor: pointer;
+  font-weight: 600;
 }
 
 .remove-button {
