@@ -66,6 +66,11 @@ form {
   gap: 1em;
 
   border-inline: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+form + .created-book {
+  border-top: none;
 }
 
 .book + .book {
