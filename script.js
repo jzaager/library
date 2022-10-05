@@ -12,36 +12,42 @@ function Book(title, author, pageCount, readStatus) {
   this.pageCount = pageCount;
   this.readStatus = readStatus;
 }
+
 Book.prototype.getIndex = function() {
   return myLibrary.indexOf(this);
 }
+// Loop through myLibrary and create a new div on the page with the book's info
 Book.prototype.displayAllBooks = function() {
-
   const newDisplayBook = document.createElement('div');
+
+  for (let i = 0; i < myLibrary.length; i++) {
+    newDisplayBook.classList.add('book', 'created-book');
+    newDisplayBook.setAttribute('book-index', this.getIndex());
+  }
+  
+  /* Bind these functions to newDisplayBook to get the books' 
+     index attribute in the callback functions */
+  const boundSetDisplayBookTraits = setDisplayBookTraits.bind(newDisplayBook); 
+  const boundCreateRemoveButton = createRemoveButton.bind(newDisplayBook);
+  const boundCreateReadButton = createReadButton.bind(newDisplayBook);
+
+  newDisplayBook.append(boundSetDisplayBookTraits()[0], boundSetDisplayBookTraits()[1],
+     boundSetDisplayBookTraits()[2], boundCreateReadButton(), boundCreateRemoveButton());
+
+  bookshelf.append(newDisplayBook);
+}
+
+function setDisplayBookTraits() {
+  const index = this.getAttribute('book-index');
   const displayBookTitle = document.createElement('h2');
   const displayBookAuthor= document.createElement('h3');
   const displayBookPageCount = document.createElement('p');
 
-  for (let i = 0; i < myLibrary.length; i++) {
-    
-    newDisplayBook.classList.add('book', 'created-book');
-    newDisplayBook.setAttribute('book-index', this.getIndex());
-    
-    displayBookTitle.textContent = this.title;
-    displayBookAuthor.textContent = this.author;
-    displayBookPageCount.textContent = this.pageCount;
+  displayBookTitle.textContent = myLibrary[index].title;
+  displayBookAuthor.textContent = myLibrary[index].author;
+  displayBookPageCount.textContent = myLibrary[index].pageCount;
 
-    //            //
-
-    
-  }
-  const boundCreateRemoveButton = createRemoveButton.bind(newDisplayBook);
-  const boundCreateReadButton = createReadButton.bind(newDisplayBook);
-
-  newDisplayBook.append(displayBookTitle, displayBookAuthor,
-    displayBookPageCount, boundCreateReadButton(), boundCreateRemoveButton());
-
-  bookshelf.append(newDisplayBook);
+  return [displayBookTitle, displayBookAuthor, displayBookPageCount];
 }
 
 function createReadButton() {
@@ -80,17 +86,21 @@ function toggleReadStatus() {
   }
 }
 
+/* Removes both the array and display book at the index of 
+   the book the button was clicked on */
 function deleteBook() {
   const index = this.parentNode.getAttribute('book-index')
   bookshelf.querySelector(`[book-index="${index}"`).remove();
   myLibrary.splice([index], 1);
 
+  // Reset the index of each created book to match that of myLibrary
   const domBooks = document.querySelectorAll('.created-book');
   for (let i = 0; i < myLibrary.length; i++) {
     domBooks[i].setAttribute('book-index', i);
   }
 }
 
+// Get the user inputted values and create a new book with them
 function addBookToLibrary() {
   const inputTitle = document.querySelector('#book-title').value;
   const inputAuthor = document.querySelector('#author').value;
@@ -98,6 +108,7 @@ function addBookToLibrary() {
   const inputReadStatus = document.querySelector('#read-complete').checked;
   const newBook = new Book(inputTitle, inputAuthor, inputPageCount, inputReadStatus);
  
+  // Only add the book to the array+display if a title is not blank
   if (inputTitle) {
     myLibrary.push(newBook);
     newBook.displayAllBooks();
@@ -106,6 +117,7 @@ function addBookToLibrary() {
 
 // Event Listeners
 form.addEventListener('submit', function handleSubmit(event) {
+  // Prevents the GET or POST methods
   event.preventDefault();
   form.reset();
 });
