@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap');
 
+/*        Table of Contents          */
+/* ================================= */
+/*  -layout              ~~~ L.43    */
+/**     -main-content    ~~~ L.59   **/
+/**     -row styling     ~~~ L.96   **/
+/**     -column headings ~~~ L.163  **/
+/**     -form inputs     ~~~ L.191  **/
+/*  -components          ~~~ L.228   */
+/**     -custom checkbox ~~~ L.288  **/
+
 :root {
   --clr-bookshelf: rgb(114, 76, 6);
   --clr-remove-button: rgba(242, 146, 116, 0.7);
@@ -24,10 +34,13 @@
 }
 
 html,
-body {
+body,
+.main-content {
   width: 100%;
   height: 100%;
 }
+
+/* layout */
 
 body {
   padding: 1em 6em;
@@ -37,25 +50,55 @@ body {
   background-attachment: fixed;
 }
 
-h2 {
-  font-size: 2.2rem;
-}
-
-h3 {
-  font-size: 2.2rem;
-}
-
+h2,
+h3,
 p {
   font-size: 2.2rem;
 }
 
-.main-content {
-  width: 100%;
-  height: 100%;
-}
+/** main-content **/
 
 .bookshelf {
+  padding-inline: 0;
   margin-bottom: 2em;
+  width: 100%;
+  min-height: 90%;
+  border-radius: 6px;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+
+  border: 1px solid gray;
+  box-shadow: 0 8px 0.9rem 0.1rem rgb(0 0 0 / 0.3);
+}
+
+.bookshelf:has(.book:hover) .book:not(:hover) {
+  scale: 0.98;
+  border-radius: 8px;
+}
+
+.bookshelf:has(.book:hover) .book {
+  border-top: 1px solid black;
+}
+
+.bookshelf:has(.book:hover) :nth-child(3):hover  {
+  border-top: none;
+  border-inline: none;
+}
+
+.bookshelf:not(:has(.book:hover)) .book {
+  border-inline: none;
+}
+
+/** row styling (each "book") **/
+
+.book {
+  gap: 2em;
+  justify-content: space-between;
+  transition: scale 200ms ease-in-out, border-radius 150ms linear;
 }
 
 .book * {
@@ -73,10 +116,7 @@ form {
   border-bottom: 1px solid black;
 }
 
-form + .created-book {
-  border-top: none;
-}
-
+form + .book,
 .book + .book {
   border-top: none;
 }
@@ -91,33 +131,11 @@ form + .created-book {
   gap: 1em;
 
   align-items: center;
-
-  transition: scale 350ms ease, border-radius 350ms linear;
 }
 
 .book h2,
-.headings  h2{
+.headings h2{
   flex: 1;
-}
-
-.created-book {
-  gap: 2em;
-}
-
-.created-book h2 {
-  max-width: 475px;
-}
-
-.created-book h3 {
-  max-width: 380px;
-}
-
-.created-book p {
-  max-width: 350px;
-}
-
-.form-row.title {
-  grid-column: 1;
 }
 
 .book h3,
@@ -125,8 +143,16 @@ form + .created-book {
   flex: 0.75;
 }
 
-.form-row.author {
-  grid-column: 2;
+.book h2 {
+  max-width: 475px;
+}
+
+.book h3 {
+  max-width: 380px;
+}
+
+.book p {
+  max-width: 350px;
 }
 
 .book p,
@@ -134,58 +160,11 @@ form + .created-book {
   flex: 0.55;
 }
 
-.form-row.page-count {
-  grid-column: 3;
-
-}
-
-.form-row.read-status {
-  grid-column: 4;
-  justify-self: end;
-}
-
-.form-row.add-book-button {
-  grid-column: 5;
-  justify-self: end;
-  
-  display: flex;
-}
-
-.button-group {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 1em;
-  flex: 0.4 0 auto;
-}
-
-button {
-  padding: 0.75em 1em;
-  border: none;
-  border-radius: 2em;
-
-  flex: 1;
-  max-width: 150px;
-  font-size: 1.1rem;
-}
-
-button:hover {
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.remove-button {
-  background-color: var(--clr-remove-button);
-}
-
-.read-button.not-read {
-  background-color: var(--clr-read-button-not-read);
-}
+/** column headings **/
 
 .headings {
   border: none;
   border-bottom: 3px solid black;
-
   font-weight: 600;
 }
 
@@ -209,52 +188,104 @@ button:hover {
   flex: 0.35;
 }
 
-.bookshelf {
-  padding-inline: 0;
-  width: 100%;
-  min-height: 90%;
-  border-radius: 6px;
-  background-color: white;
+/** form-inputs (first row) **/
 
+.form-row {
   display: flex;
-  flex-direction: column;
-
-  position: relative;
-
-  border: 1px solid gray;
-  box-shadow: 0 8px 0.9rem 0.1rem rgb(0 0 0 / 0.3);
-}
-
-.bookshelf:has(.book:hover) .book:not(:hover) {
-  scale: 0.95;
-  border-radius: 8px;
-}
-
-.bookshelf:has(.book:hover) .book {
-  border-top: 1px solid black;
-}
-
-.bookshelf:has(.book:hover) :nth-child(3):hover  {
-  border-top: none;
 }
 
 .form-row label {
   display: none;
 }
 
-.form-row {
+.form-row.title {
+  grid-column: 1;
+}
+
+.form-row.author {
+  grid-column: 2;
+}
+
+.form-row.page-count {
+  grid-column: 3;
+}
+
+.form-row.read-status {
+  grid-column: 4;
+  justify-self: end;
+}
+
+.form-row.add-book-button-row {
+  grid-column: 5;
+  justify-self: end;
   display: flex;
+}
+
+.github-creator {
+  float: right;
+}
+
+/* components */
+
+.button-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1em;
+  flex: 0.4 0 auto;
+}
+
+input,
+button {
+  border-radius: 2em;
+}
+
+button {
+  padding: 0.75em 1em;
+  border: none;
+
+  flex: 1;
+  max-width: 150px;
+  font-size: 1.1rem;
+}
+
+.submit-button {
+  background-color: var(--clr-add-book-button);
+  min-width: 150px;
+}
+
+button:hover {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.remove-button {
+  background-color: var(--clr-remove-button);
+}
+
+.read-button.not-read {
+  background-color: var(--clr-read-button-not-read);
 }
 
 input {
   border: 1px solid gray;
   padding: 0.5em 1em;
-  border-radius: 2em;
+}
+
+input:hover {
+  border: 2px solid gray;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0.1em 0.25em .03em rgb(0 0 0 / 0.3);
 }
 
 input[type="number"] {
   align-self: baseline;
 }
+
+/** Custom checkbox **/
 
 input[type="checkbox"] {
   appearance: none;
@@ -284,16 +315,8 @@ input[type="checkbox"]:checked::before {
   transform: scale(1);
 }
 
-.submit-button {
-  border-radius: 2em;
-  background-color: var(--clr-add-book-button);
-  min-width: 150px;
-}
-
-.submit-button:hover {
+input[type="checkbox"]:hover,
+input[type="checkbox"]:focus {
   cursor: pointer;
-}
-
-.github-creator {
-  float: right;
+  border: 2px solid black;
 }
