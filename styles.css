@@ -143,6 +143,11 @@ form + .book,
   flex: 0.75;
 }
 
+.book h2,
+.book h3 {
+  padding-left: 15px;
+}
+
 .book h2 {
   max-width: 475px;
 }
@@ -153,6 +158,7 @@ form + .book,
 
 .book p {
   max-width: 350px;
+  padding-left: 61px;
 }
 
 .book p,
