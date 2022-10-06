@@ -51,7 +51,7 @@ However, defining the method on the constructor itself will create a new copy of
 
 Prototypes can also be copied to be used as prototypes of other constructors, but it is important to use ```Object.create()``` to create said **copy**, and not overwrite the original prototype.
 
-**Syntax**
+**Syntax:**
 
 ```javascript
 Constructor2.prototype = Object.create(Constructor.prototype)
@@ -70,7 +70,7 @@ An excellent resource to help understand 'this' in different contexts can be fou
 
 Due to the ever-changing value of 'this', the article above discusses the ```.bind()``` method (as well as others) that can be used to create functions with a predefined value of 'this'. I found this method incredibly useful and wanted to highlight the syntax, below, as a reminder:
 
-**Syntax**
+**Syntax:**
 
 ```javascript
 const myObject = {property1: 'value1'};
